@@ -1,6 +1,7 @@
-# MyApp
+# Audit-Alfresco
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.2.
+Auditing alfresco usage by an angular application
 
 ## Development server
 
