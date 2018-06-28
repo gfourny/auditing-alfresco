@@ -1,0 +1,29 @@
+#toolbar {
+  background-color: #0c69a6;
+}
+
+#emptySpan {
+  flex: 1 1 100%
+}
+
+#titleSpan {
+  color: antiquewhite;
+}
+
+#graphic {
+  margin-left: 10%;
+  margin-top: 2%;
+  width: 1600px; 
+}
+
+#blockTextWithDateRange {
+  margin-top: 10%;
+}
+
+#textDate {
+  display: block;
+}
+
+#dateRangePicker{
+  width: 170px;
+}

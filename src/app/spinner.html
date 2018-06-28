@@ -1,0 +1,4 @@
+<div id="spinner">
+    <label id="text">Chargement des données en cours</label>
+    <mat-spinner id="posSpinner" *ngIf="resourcesLoaded === true" [value]="progressValue" color="warn" [strokeWidth]="10" [diameter]="100"></mat-spinner>
+</div>

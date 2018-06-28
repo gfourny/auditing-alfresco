@@ -1,0 +1,41 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <mat-toolbar id="toolbar">
+    <span id="titleSpan">Bienvenue sur l'application de reporting d'{{title}}</span>
+    <span id="emptySpan"></span>
+    <span id="spanLogo">
+        <a href="http://127.0.0.1:8080/share" target="_blank">
+          <img id="imgSpanLogo" src="../assets/amexio.png" height="63px" width="130px"/>
+        </a>
+    </span>
+  </mat-toolbar>
+
+
+  <mat-tab-group>
+      <mat-tab label="Nombre de connexion"> 
+          <div id="blockTextWithDateRange" class="col-md-6">
+            <label id="textDate">Sélectionner une plage de date</label>
+            <input id="dateRangePicker" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)"/>
+          </div>     
+
+          <div class="row" id="graphic" >
+            <div class="col-md-6">
+              <div style="display: block;">
+                <canvas baseChart width="20" height="20"
+                            [datasets]="lineChartData"
+                            [labels]="lineChartLabels"
+                            [options]="lineChartOptions"
+                            [colors]="lineChartColors"
+                            [legend]="lineChartLegend"
+                            [chartType]="lineChartType">
+                </canvas>
+              </div>
+            </div>
+          </div>
+      </mat-tab>
+      <mat-tab label="Accès aux documents">
+        <auditing-content></auditing-content>
+      </mat-tab>
+    </mat-tab-group>
+
+  <script src="node_modules/chart.js/src/chart.js"></script>
