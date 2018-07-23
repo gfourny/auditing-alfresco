@@ -1,0 +1,15 @@
+<div>
+    <div id="blockTextWithDateRange" class="col-md-6">
+        <label id="textDate">Sélectionner une plage de date</label>
+        <input id="dateRangePicker" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)"/>
+    </div> 
+
+    <div style="display: block">
+        <canvas baseChart
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+    </div>  
+</div>

@@ -6,6 +6,7 @@ import { Daterangepicker } from 'ng2-daterangepicker';
 
 import { AppComponent, DialogOverviewExampleDialog } from './app.component';
 import { ContentAuditing, DialogOverviewExampleDialogContent } from './auditContent/contentAuditing.component';
+import { UserAuditing, DialogOverviewExampleDialogUser } from './auditUser/userAuditing.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -24,7 +25,9 @@ registerLocaleData(localeFr, 'fr');
     AppComponent,
     DialogOverviewExampleDialog,
     DialogOverviewExampleDialogContent,
-    ContentAuditing
+    DialogOverviewExampleDialogUser,
+    ContentAuditing,
+    UserAuditing
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ registerLocaleData(localeFr, 'fr');
     MatDialogModule,
     HttpModule
   ],
-  bootstrap: [AppComponent], entryComponents:[DialogOverviewExampleDialog, DialogOverviewExampleDialogContent]
+  bootstrap: [AppComponent], entryComponents:[DialogOverviewExampleDialog, DialogOverviewExampleDialogContent, DialogOverviewExampleDialogUser]
 })
 export class AppModule {
  }
