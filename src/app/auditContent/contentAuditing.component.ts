@@ -52,15 +52,8 @@ import 'rxjs/add/operator/map';
     public barChartData:any[] = [
     {data: [], label: 'Nombre de documents modifiés'}
     ];
+
     
-    // events
-    public chartClicked(e:any):void {
-    console.log(e);
-    }
-    
-    public chartHovered(e:any):void {
-    console.log(e);
-    }
      
     private getData(timeStart: number, timeEnd: number) {
     //On obtient l'ensemble du json qui nous est retourné par l'api d'alfresco;
@@ -137,7 +130,6 @@ import 'rxjs/add/operator/map';
         var dateSplited;
         var oldDateSplited;
         var dateStringSplited;
-        var extractorsString:String;
 
         //TODO définir les valeurs par défaut dans le picker
         //On vérifie que les bornes ont été définit
@@ -159,7 +151,6 @@ import 'rxjs/add/operator/map';
             //Récupération de la date dans notre entrée
             date = entries[j].time;
             dateString = new Date(date).getTime();
-            extractorsString = entries[j].values["/auditexampleextractors/create/out/a"];
             //On vérifie que la date récupérée dans le json se trouve entre les bornes de date de début et de fin
             if(this.isBetween(dateString, this.daterange.start, this.daterange.end)){
                 //Compare l'égalité entre oldDate et date.
@@ -168,7 +159,7 @@ import 'rxjs/add/operator/map';
                 dateSplited = datePipe.transform(dateString).split(' ');
                 dateStringSplited = dateSplited[1] + ' ' + dateSplited[2];
                 if(oldDateSplited === dateStringSplited){
-                //Si vrai, incrémentation du nbLogin
+                //Si vrai, incrémentation du nombre de documents.
                 console.log(oldDateSplited);
                 nDocument = nDocument + 1;
                 } else {

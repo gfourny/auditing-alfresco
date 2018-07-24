@@ -19,6 +19,11 @@ import 'rxjs/add/operator/map';
     count: number;
     public daterange: any = {};
 
+    public options: any = {
+        locale: { format: 'DD-MM-YYYY' },
+        alwaysShowCalendars: false,
+        };
+
 
     constructor(private http : Http, public dialog: MatDialog){
         this.headers = new Headers();
@@ -29,8 +34,10 @@ import 'rxjs/add/operator/map';
       };
 
     public doughnutChartLabels:string[] = [];
+    public _doughnutChartLabels: string[];
     public doughnutChartData:number[] = [];
     public doughnutChartType:string = 'doughnut';
+
 
     private getData(timeStart: number, timeEnd: number) {
         //On obtient l'ensemble du json qui nous est retourné par l'api d'alfresco;
@@ -45,6 +52,51 @@ import 'rxjs/add/operator/map';
                 this.count = data.count;
                 this.refreshChart(entries);
                 }));
+    }
+
+
+    // Méthode qui permet de récupérer les dates de début et de fin sélectionnées
+    private selectedDate(value: any, datepicker?: any) {
+        this.doughnutChartLabels = new Array();
+        this.doughnutChartData = new Array();
+        let endDate: string;
+        let startDate: string;
+    
+        datepicker.start = value.start;
+        datepicker.end = value.end;
+    
+        this.daterange.start = value.start;
+        this.daterange.end = value.end;
+        this.daterange.label = value.label;
+    
+        endDate = this.daterange.end;
+        this.daterange.end = new Date(this.daterange.end);
+    
+        startDate = this.daterange.start;
+        this.daterange.start = new Date(this.daterange.start);
+    
+        this.daterange.start = Date.parse(this.daterange.start);
+        this.daterange.end = Date.parse(this.daterange.end);
+    
+        this.openDialog();
+        this.getData(this.daterange.start, this.daterange.end);
+    }
+
+
+    // Méthode qui permet de vérifier que la date contenu dans le retour le l'api d'alfresco est comprise entre
+    // la date de début et de fin sélectionnée par l'utilisateur.
+    private isBetween(my_date, my_debut, my_fin):Boolean {
+
+        let retour:boolean = false;
+        //my_date = new Date(my_date).getTime();
+    
+        if (my_date >= my_debut && my_date <= my_fin){
+            retour = true;
+            // console.log("La date " + my_date + " est comprise entre le " + my_debut + " et le " + my_fin);
+        } else {
+            // console.log("La date " + my_date + " n'est pas comprise entre le " + my_debut + " et le " + my_fin);
+        }
+        return retour;
     }
  
 
@@ -91,14 +143,14 @@ import 'rxjs/add/operator/map';
                 dateSplited = datePipe.transform(dateString).split(' ');
                 dateStringSplited = dateSplited[1] + ' ' + dateSplited[2];
                 if(oldDateSplited === dateStringSplited){
-                //Si vrai, incrémentation du nbLogin
+                //Si vrai, incrémentation du nombre de document.
                 console.log(oldDateSplited);
-                user = user;
+                nDocument = nDocument + 1;
                 } else {
-                //Si faux, ajout du nDocument dans barChartData.
-                user = user;
+                //Si faux, ajout du nDocument dans doughnutChartData.
+                nDocument = nDocument / 2;
                 this.doughnutChartData.push(nDocument);
-                //Ajout de la date dans lineChartLabels
+                //Ajout du user dans doughnutChartLabels
                 this.doughnutChartLabels.push(user);
                 }
                 // oldDate prend la valeur de la date en cours
@@ -124,50 +176,6 @@ import 'rxjs/add/operator/map';
             this.dialog.closeAll();
         }
     }
-
-
-    // Méthode qui permet de vérifier que la date contenu dans le retour le l'api d'alfresco est comprise entre
-    // la date de début et de fin sélectionnée par l'utilisateur.
-    private isBetween(my_date, my_debut, my_fin):Boolean {
-
-        let retour:boolean = false;
-        //my_date = new Date(my_date).getTime();
-    
-        if (my_date >= my_debut && my_date <= my_fin){
-            retour = true;
-            // console.log("La date " + my_date + " est comprise entre le " + my_debut + " et le " + my_fin);
-        } else {
-            // console.log("La date " + my_date + " n'est pas comprise entre le " + my_debut + " et le " + my_fin);
-        }
-        return retour;
-    }
-
-    // Méthode qui permet de récupérer les dates de début et de fin sélectionnées
-    private selectedDate(value: any, datepicker?: any) {
-        this.doughnutChartLabels = new Array();
-        this.doughnutChartData = [];
-        let endDate: string;
-        let startDate: string;
-    
-        datepicker.start = value.start;
-        datepicker.end = value.end;
-    
-        this.daterange.start = value.start;
-        this.daterange.end = value.end;
-        this.daterange.label = value.label;
-    
-        endDate = this.daterange.end;
-        this.daterange.end = new Date(this.daterange.end);
-    
-        startDate = this.daterange.start;
-        this.daterange.start = new Date(this.daterange.start);
-    
-        this.daterange.start = Date.parse(this.daterange.start);
-        this.daterange.end = Date.parse(this.daterange.end);
-    
-        this.openDialog();
-        this.getData(this.daterange.start, this.daterange.end);
-        }
 
 
     // events
